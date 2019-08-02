@@ -17,7 +17,8 @@ export default class LocationSearchInput extends React.Component {
   handleSelect = address => {
     geocodeByAddress(address)
       .then(results => getLatLng(results[0]))
-      .then(latLng => console.log('Success', latLng))
+      .then(latLng => {
+      })
       .catch(error => console.error('Error', error));
   };
  
@@ -38,7 +39,8 @@ export default class LocationSearchInput extends React.Component {
             />
             <div className="autocomplete-dropdown-container">
               {loading && <div>Loading...</div>}
-              {suggestions.map(suggestion => {
+              {suggestions.filter(e => e.types.includes('health')).map(suggestion => {
+                console.log(suggestion.types.includes('health'))
                 const className = suggestion.active
                   ? 'suggestion-item--active'
                   : 'suggestion-item';
