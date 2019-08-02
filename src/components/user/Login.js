@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AuthService from '../services/AuthService';
+import AuthService from '../../services/AuthService';
 
 class Login extends Component {
   constructor(props){
@@ -21,6 +21,8 @@ class Login extends Component {
       .then(()=>{
           this.props.toggleForm('login');
           this.props.getUser();
+
+          // this.props.history.push('/gyms')
       })
 
   }
