@@ -31,3 +31,13 @@
     transform: rotate(360deg);
   }
 }
+
+.overlay{
+  background-image: url('/imgs/loading.gif');
+  position: absolute;
+  top: 100px;
+  width: 80%;
+  height: 400px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}

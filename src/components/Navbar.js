@@ -35,7 +35,7 @@ function Navbar(props){
 
         <button onClick = {doTheLogout} >Log Out </button>
 
-            <span>Hello, {props.theUser.username}</span>
+            <h1>Hello, Welcome to Jiu Jitsu locator {props.theUser.username}!</h1>
         </span>
         }
 
