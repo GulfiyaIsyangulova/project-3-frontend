@@ -33,7 +33,7 @@ class Login extends Component {
     return(
       <form onSubmit = {this.tryToLogin}>
 
-          <h3>Login</h3>
+          <h3>Already a member</h3>
 
           <legend>Username</legend>
           <input value={this.state.usernameInput}
