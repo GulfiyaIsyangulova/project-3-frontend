@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link, NavLink} from 'react-router-dom';
+import './navbar.css'
 
 
 
@@ -18,11 +19,10 @@ function Navbar(props){
 
 
         <nav>
-            {/* {props.theUser && 
-        <Link to="/projects" style={{ textDecoration: 'none', margin: '10px' }}>Projects</Link>
-            } */}
+           
 
-
+            
+          
         {!props.theUser && 
         <span>
         <button onClick = {()=> props.toggleForm('login')} > Login </button>
@@ -35,7 +35,7 @@ function Navbar(props){
 
         <button onClick = {doTheLogout} >Log Out </button>
 
-            <h1>Hello, Welcome to Jiu Jitsu locator {props.theUser.username}!</h1>
+            <h1>Hey, lets find a gym and train {props.theUser.username}!</h1>
         </span>
         }
 

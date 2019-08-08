@@ -41,3 +41,9 @@
   background-repeat: no-repeat;
   background-size: contain;
 }
+
+.mapDetailsComponent{
+  display: flex;
+    justify-content: center;
+}
+
