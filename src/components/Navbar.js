@@ -33,9 +33,10 @@ function Navbar(props){
         {props.theUser && 
         <span>
 
-        <button onClick = {doTheLogout} >Log Out </button>
+            Hey, {props.theUser.username}!
+        <button onClick = {doTheLogout} style={{ textDecoration: `100%`}} >Log out </button>
 
-            <h1>Hey, lets find a gym and train {props.theUser.username}!</h1>
+
         </span>
         }
 

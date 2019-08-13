@@ -1,5 +1,6 @@
-.App {
+body{
   text-align: center;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .App-logo {
@@ -33,7 +34,7 @@
 }
 
 .overlay{
-  background-image: url('/imgs/loading.gif');
+  background-image: url('https://cdn.dribbble.com/users/846207/screenshots/4295562/google-search.gif');
   position: absolute;
   top: 100px;
   width: 80%;
@@ -46,4 +47,14 @@
   display: flex;
     justify-content: center;
 }
+.searchThing{
+  display: flex;
+    justify-content: center;
 
+}
+
+.allIncludedNavbar{
+  display: flex;
+    justify-content: space-between;
+    background-color: beige;
+}
