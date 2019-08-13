@@ -31,11 +31,13 @@ class App extends Component {
       mapReady: false,
       isOpen: false,
       details: {},
-      photo: ""
+      photo: "",
+      gymComments: [],
+      theGymId: ''
     };
 
     this.service = new AuthService();
-    Geocode.setApiKey("AIzaSyCpGcRTL6DiWCcICDtehgpbBfr4DYVN__Q");
+    Geocode.setApiKey("AIzaSyAU9nQ_E20F7o9usfZFFEv8lLeDkLjlCxk");
 
   }
 
@@ -44,8 +46,9 @@ class App extends Component {
     this.getCurrentlyLoggedInUser();
   }
 
+
   getAllGyms = () => {
-    axios.get(`http://localhost:5000/gyms`)
+    axios.get(`${process.env.REACT_APP_API_URL}gyms`)
       .then(responseFromApi => {
         const data = responseFromApi.data;
 
@@ -55,7 +58,7 @@ class App extends Component {
 
         setTimeout(() => {
           this.setState({ mapReady: true })
-        }, 1500)
+        }, 2500)
         this.setGeoLocations();
       });
   }
@@ -78,24 +81,52 @@ class App extends Component {
     });
   }
 
+
+  getGymComments = (gymid) =>{
+
+    axios.get(`${process.env.REACT_APP_API_URL}reviews/gymComments/${gymid}`)
+    .then(gymCommentsFromApi => {
+      console.log('DATA DETAILS');
+     
+     
+      
+
+      this.setState({  gymComments: gymCommentsFromApi.data });
+      
+    }).catch(err => console.log(err))
+
+
+
+  }
+
   onToggleOpenInfoWindow = (number, gymInfo) => {
+    console.log('Opening INFO WINDOW!!!!!');
     if (gymInfo) {
-      axios.get(`http://localhost:5000/gyms/getPlacesDetails/` + gymInfo.info.place_id)
+      axios.get(`${process.env.REACT_APP_API_URL}gyms/getPlacesDetails/` + gymInfo.info.place_id)
         .then(responseFromApi => {
           const data = responseFromApi.data.result;
 
-          console.log('DATA DETAILS');
-          console.log(data);
+          axios.get(`${process.env.REACT_APP_API_URL}reviews/gymComments/${gymInfo.info._id}`)
+          .then(gymCommentsFromApi => {
+            console.log('DATA DETAILS');
+            console.log(data);
+            console.log("the gym info -------- ", gymInfo);
+            
+  
+            this.setState({ isOpen: number, details: data, gymComments: gymCommentsFromApi.data, theGymId: gymInfo.info._id });
+            
+          }).catch(err => console.log(err))
 
-          this.setState({ isOpen: number, details: data });
         });
 
+        console.log("GYMINFO PLACE ID");
         console.log(gymInfo.info.place_id);
 
-      axios.get(`http://localhost:5000/gyms/getPlacesPhotos/` + gymInfo.info.place_id)
+        axios.get(`${process.env.REACT_APP_API_URL}gyms/getPlacesPhotos/${gymInfo.info.place_id}`)
+        // axios.get(`https://jiu-jitsu-locator.herokuapp.com/gyms/getPlacesPhotos/` + gymInfo.info.place_id)
         .then(responseFromApi => {
             console.log("API RESPONSE");
-            console.log(responseFromApi.data);
+            console.log(responseFromApi);
             this.setState({
                 photo: responseFromApi.data.photos[0]
             });
@@ -130,39 +161,58 @@ class App extends Component {
   }
 
   render() {
+    
     if (this.state.mapReady)
       return (
         <div>
-          <div class="top-navigation">
+          <div class="allIncludedNavbar">
           <h1>Jiu-Jitsu Locator
           <img src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png" style={{ height: `30px` }}/></h1>
+          <div class="top-navigation">
           <Navbar
             theUser={this.state.currentlyLoggedIn}
             pleaseLogOut={() => this.service.logout()}
             toggleForm={this.toggleForm}
             getUser={this.getCurrentlyLoggedInUser}
+            
+
           />
-          
+        
+          <div className="searchThing">
+          <img src="https://cdn.pixabay.com/photo/2017/01/13/01/22/magnifying-glass-1976105_960_720.png" style={{ height: `30px` }}></img>
+            <LocationSearchInput />
+          </div>
+          <div>
          {this.state.signupShowing &&
             <Signup getUser={this.getCurrentlyLoggedInUser}
             toggleForm={this.toggleForm}
             />
           }
-
+          </div>
+          <div>
           {this.state.loginShowing &&
             <Login getUser={this.getCurrentlyLoggedInUser}
             toggleForm={this.toggleForm}
             />
           }
-        <NavLink to = "/profile/:id">Profile</NavLink>
-          <LocationSearchInput />
-
-
           </div>
-            <div class="mapDetailsComponent">  
-          <GymMap geoLocations={this.state.geoLocations} onToggleOpenInfowindow={this.onToggleOpenInfoWindow} isOpen={this.state.isOpen} />
-          <DetailsComponent info={this.state.details} photo={this.state.photo}/>
               </div>
+              </div>
+            <div class="mapDetailsComponent">  
+          <GymMap geoLocations={this.state.geoLocations} onToggleOpenInfoWindow={this.onToggleOpenInfoWindow} isOpen={this.state.isOpen} />
+          {console.log("the state in app js =============== ", this.state)}
+
+
+          <DetailsComponent {...this.props} info={this.state.details}
+           photo={this.state.photo}
+           gymComments={this.state.gymComments}
+            theGymId={this.state.theGymId}
+            getComments = {this.getGymComments}
+         
+            />
+           </div>
+
+
           <Switch>
             <Route exact path="/gyms" component={GymIndex} render={(props) => <GymIndex
               {...props}
@@ -175,11 +225,6 @@ class App extends Component {
               ready={this.state.ready}
               getData={this.getAllGyms}
               theUser={this.state.currentlyLoggedIn}
-            />} />
-
-           <Route exact path="/profile/:id" render={(props) => <UserProfile
-              {...props}
-              
             />} />
 
 
@@ -196,8 +241,6 @@ class App extends Component {
 
             );
           })}
-
-
 
         </div>
       )
