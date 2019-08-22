@@ -82,18 +82,18 @@ class App extends Component {
   }
 
 
-  getGymComments = (gymid) =>{
+  getGymComments = (gymid) => {
 
     axios.get(`${process.env.REACT_APP_API_URL}reviews/gymComments/${gymid}`)
-    .then(gymCommentsFromApi => {
-      console.log('DATA DETAILS');
-     
-     
-      
+      .then(gymCommentsFromApi => {
+        console.log('DATA DETAILS');
 
-      this.setState({  gymComments: gymCommentsFromApi.data });
-      
-    }).catch(err => console.log(err))
+
+
+
+        this.setState({ gymComments: gymCommentsFromApi.data });
+
+      }).catch(err => console.log(err))
 
 
 
@@ -107,32 +107,32 @@ class App extends Component {
           const data = responseFromApi.data.result;
 
           axios.get(`${process.env.REACT_APP_API_URL}reviews/gymComments/${gymInfo.info._id}`)
-          .then(gymCommentsFromApi => {
-            console.log('DATA DETAILS');
-            console.log(data);
-            console.log("the gym info -------- ", gymInfo);
-            
-  
-            this.setState({ isOpen: number, details: data, gymComments: gymCommentsFromApi.data, theGymId: gymInfo.info._id });
-            
-          }).catch(err => console.log(err))
+            .then(gymCommentsFromApi => {
+              console.log('DATA DETAILS');
+              console.log(data);
+              console.log("the gym info -------- ", gymInfo);
+
+
+              this.setState({ isOpen: number, details: data, gymComments: gymCommentsFromApi.data, theGymId: gymInfo.info._id });
+
+            }).catch(err => console.log(err))
 
         });
 
-        console.log("GYMINFO PLACE ID");
-        console.log(gymInfo.info.place_id);
+      console.log("GYMINFO PLACE ID");
+      console.log(gymInfo.info.place_id);
 
-        axios.get(`${process.env.REACT_APP_API_URL}gyms/getPlacesPhotos/${gymInfo.info.place_id}`)
+      axios.get(`${process.env.REACT_APP_API_URL}gyms/getPlacesPhotos/${gymInfo.info.place_id}`)
         // axios.get(`https://jiu-jitsu-locator.herokuapp.com/gyms/getPlacesPhotos/` + gymInfo.info.place_id)
         .then(responseFromApi => {
-            console.log("API RESPONSE");
-            console.log(responseFromApi);
-            this.setState({
-                photo: responseFromApi.data.photos[0]
-            });
+          console.log("API RESPONSE");
+          console.log(responseFromApi);
+          this.setState({
+            photo: responseFromApi.data.photos[0]
+          });
 
-            console.log("PHOTO: ");
-            console.log(this.state.photo);
+          console.log("PHOTO: ");
+          console.log(this.state.photo);
         });
     }
   }
@@ -161,56 +161,57 @@ class App extends Component {
   }
 
   render() {
-    
+
     if (this.state.mapReady)
       return (
         <div>
           <div class="allIncludedNavbar">
-          <h1>Jiu-Jitsu Locator
-          <img src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png" style={{ height: `30px` }}/></h1>
-          <div class="top-navigation">
-          <Navbar
-            theUser={this.state.currentlyLoggedIn}
-            pleaseLogOut={() => this.service.logout()}
-            toggleForm={this.toggleForm}
-            getUser={this.getCurrentlyLoggedInUser}
-            
+            <h1>Jiu-Jitsu Locator
+          <img src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png" style={{ height: `30px` }} /></h1>
+            <div class="top-navigation">
+              <Navbar
+                theUser={this.state.currentlyLoggedIn}
+                pleaseLogOut={() => this.service.logout()}
+                toggleForm={this.toggleForm}
+                getUser={this.getCurrentlyLoggedInUser}
 
-          />
-        
-          <div className="searchThing">
-          <img src="https://cdn.pixabay.com/photo/2017/01/13/01/22/magnifying-glass-1976105_960_720.png" style={{ height: `30px` }}></img>
-            <LocationSearchInput />
-          </div>
-          <div>
-         {this.state.signupShowing &&
-            <Signup getUser={this.getCurrentlyLoggedInUser}
-            toggleForm={this.toggleForm}
-            />
-          }
-          </div>
-          <div>
-          {this.state.loginShowing &&
-            <Login getUser={this.getCurrentlyLoggedInUser}
-            toggleForm={this.toggleForm}
-            />
-          }
-          </div>
+
+              />
+
+              <div className="searchThing">
+                <img src="https://cdn.pixabay.com/photo/2017/01/13/01/22/magnifying-glass-1976105_960_720.png" style={{ height: `30px` }}></img>
+                <LocationSearchInput />
               </div>
+              <div>
+                {this.state.signupShowing &&
+                  <Signup getUser={this.getCurrentlyLoggedInUser}
+                    toggleForm={this.toggleForm}
+                  />
+                }
               </div>
-            <div class="mapDetailsComponent">  
-          <GymMap geoLocations={this.state.geoLocations} onToggleOpenInfoWindow={this.onToggleOpenInfoWindow} isOpen={this.state.isOpen} />
-          {console.log("the state in app js =============== ", this.state)}
+              <div>
+                {this.state.loginShowing &&
+                  <Login getUser={this.getCurrentlyLoggedInUser}
+                    toggleForm={this.toggleForm}
+                  />
+                }
+              </div>
+            </div>
+          </div>
+
+          <div class="mapDetailsComponent">
+            <GymMap geoLocations={this.state.geoLocations} onToggleOpenInfoWindow={this.onToggleOpenInfoWindow} isOpen={this.state.isOpen} />
+            {console.log("the state in app js =============== ", this.state)}
 
 
-          <DetailsComponent {...this.props} info={this.state.details}
-           photo={this.state.photo}
-           gymComments={this.state.gymComments}
-            theGymId={this.state.theGymId}
-            getComments = {this.getGymComments}
-         
+            <DetailsComponent {...this.props} info={this.state.details}
+              photo={this.state.photo}
+              gymComments={this.state.gymComments}
+              theGymId={this.state.theGymId}
+              getComments={this.getGymComments}
+
             />
-           </div>
+          </div>
 
 
           <Switch>
@@ -228,7 +229,7 @@ class App extends Component {
             />} />
 
 
-           
+
 
           </Switch>
           {this.state.listOfGyms.map((gym, i) => {
