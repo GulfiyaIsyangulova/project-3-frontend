@@ -18,7 +18,11 @@ function Navbar(props){
 
 
 
-        <NavLink>
+        <nav>
+           
+
+            
+          
         {!props.theUser && 
         <span>
         <button onClick = {()=> props.toggleForm('login')} > Login </button>
@@ -28,11 +32,19 @@ function Navbar(props){
 
         {props.theUser && 
         <span>
+
             Hey, {props.theUser.username}!
         <button onClick = {doTheLogout} style={{ textDecoration: `100%`}} >Log out </button>
+
+
         </span>
         }
-        </NavLink>
+
+    
+
+
+
+        </nav>
     )
 
 

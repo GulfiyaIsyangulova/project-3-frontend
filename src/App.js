@@ -59,7 +59,7 @@ class App extends Component {
         setTimeout(() => {
           this.setState({ mapReady: true })
         }, 2500)
-        this.setGeoLocations();
+        // this.setGeoLocations();
       });
   }
 
@@ -73,6 +73,8 @@ class App extends Component {
           const { lat, lng } = response.results[0].geometry.location;
 
           this.setState({ geoLocations: [...this.state.geoLocations, { lat: lat, lng: lng, info: gym }] });
+          console.log("STATEEE");
+          console.log(this.state.geoLocations);
         },
         error => {
           console.error(error);
@@ -200,7 +202,7 @@ class App extends Component {
           </div>
 
           <div class="mapDetailsComponent">
-            <GymMap geoLocations={this.state.geoLocations} onToggleOpenInfoWindow={this.onToggleOpenInfoWindow} isOpen={this.state.isOpen} />
+            <GymMap geoLocations={this.state.listOfGyms} onToggleOpenInfoWindow={this.onToggleOpenInfoWindow} isOpen={this.state.isOpen} />
             {console.log("the state in app js =============== ", this.state)}
 
 
