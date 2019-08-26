@@ -170,7 +170,7 @@ class App extends Component {
           <div class="allIncludedNavbar">
             <h1>Jiu-Jitsu Locator
           <img src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png" style={{ height: `30px` }} /></h1>
-            <div class="top-navigation">
+            {/* <div class="top-navigation"> */}
               <Navbar
                 theUser={this.state.currentlyLoggedIn}
                 pleaseLogOut={() => this.service.logout()}
@@ -181,24 +181,24 @@ class App extends Component {
               />
 
               <div className="searchThing">
-                <img src="https://cdn.pixabay.com/photo/2017/01/13/01/22/magnifying-glass-1976105_960_720.png" style={{ height: `30px` }}></img>
+                <img src="https://cdn.pixabay.com/photo/2017/01/13/01/22/magnifying-glass-1976105_960_720.png" style={{ height: `30px`, margin:`20px`}}></img>
                 <LocationSearchInput />
               </div>
-              <div>
+              <div className="signup">
                 {this.state.signupShowing &&
                   <Signup getUser={this.getCurrentlyLoggedInUser}
                     toggleForm={this.toggleForm}
                   />
                 }
               </div>
-              <div>
+              <div className="login">
                 {this.state.loginShowing &&
                   <Login getUser={this.getCurrentlyLoggedInUser}
                     toggleForm={this.toggleForm}
                   />
                 }
               </div>
-            </div>
+            {/* </div> */}
           </div>
 
           <div class="mapDetailsComponent">

@@ -48,8 +48,9 @@ body{
     justify-content: center;
 }
 .searchThing{
-  display: flex;
+    display: flex;
     justify-content: center;
+    margin-top: 24px;
 
 }
 
@@ -58,5 +59,16 @@ body{
   display: flex;
     justify-content: space-between;
     /* background-color: beige; */
-    /* border-bottom: 1px solid rgb(206, 203, 203); */
+    border-bottom: 1px solid rgb(206, 203, 203);
+}
+.signup{
+  margin-left: 10px;
+}
+h1{
+  margin-left:60px;
+  margin-top: 40px
+}
+form{
+  margin-right:40px;
+  background-color: aquamarine;
 }
