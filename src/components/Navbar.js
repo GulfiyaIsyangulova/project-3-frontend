@@ -20,9 +20,6 @@ function Navbar(props){
 
         <nav>
            
-
-            
-          
         {!props.theUser && 
         <span>
         <button onClick = {()=> props.toggleForm('login')} > Login </button>
